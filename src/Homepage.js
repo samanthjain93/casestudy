@@ -1,25 +1,28 @@
 import React from 'react'
-import { Container } from 'react-bootstrap';
+
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar'
+
 import { BrowserRouter, Link, Routes,Route } from 'react-router-dom';
 import Login from './Login';
 import Table from './Table';
 import Register1 from './Register1'
+import '../src/Login.css'
 
 function Homepage() {
   return (
     <BrowserRouter>
-    <div>
-        <Navbar bg="primary" expand="lg">
-      <Container>
-      <Nav className="me-auto">
-      <Nav.Link   as={Link} to="/register1">Register</Nav.Link>
-      <Nav.Link   as={Link} to="/home">Login</Nav.Link>
-      <Nav.Link  as={Link} to="/link">Table</Nav.Link>
-    </Nav>
-    </Container>
-    </Navbar>
+    <div className='mani'>
+        {/* <Navbar bg="primary" expand="lg"> */}
+      
+      
+        <ul>
+     <li><Nav.Link   as={Link} to="/register1">Register</Nav.Link></li>
+      <li><Nav.Link   as={Link} to="/home">Login</Nav.Link></li>
+      <li><Nav.Link  as={Link} to="/link">Table</Nav.Link></li>
+      </ul>
+    
+    
+    {/* </Navbar> */}
     </div>
   <div>
     <Routes>

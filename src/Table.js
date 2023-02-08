@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Modal from "./Modal";
+import '../src/Login.css'
 
 import { Button } from "@mui/material";
 import { useState } from "react";
@@ -29,17 +30,29 @@ export default function AccessibleTable() {
    let passData=(tableData)=>{
   setSelectData(tableData);
   }
+
+  // const [open, setOpen] = useState(false)
+  // const [sendOpen, setSendOpen] = useState(false)
+
+  // const handleSendOpen=()=>setSendOpen(true);
+  // const handleSendOpenClose=()=>setSendOpen(false);
+
+  // const handleOpen=()=>setOpen(true);
+  // const handleClose=()=>setOpen(false); 
+
+let ls = localStorage.getItem("tableDate");
+let local =ls ? JSON.parse(ls):[];
+
+ let deleteDate = (index) => {
+  local.splice(index, 1);
+  localStorage.setItem("tableDate", JSON.stringify(local));
+};
+
 let modalEditOpen=(data)=>
 {
 setOpenEdit(true);
 setEdit(data);
 }
-let ls = localStorage.getItem("tableDate");
-let local =ls ? JSON.parse(ls):[];
- let deleteDate = (index) => {
-  local.splice(index, 1);
-  localStorage.setItem("tableDate", JSON.stringify(local));
-};
 
 // let local = localStorage.getItem("tableDate");
 
@@ -67,10 +80,10 @@ let local =ls ? JSON.parse(ls):[];
               <TableCell align="right">{tableDate.date}</TableCell>
               <TableCell align="right">{tableDate.price}</TableCell>
               <TableCell align="right">
-                <Button
+                <Button variant="contained" size="small"
                 onClick={()=>{passData(tableDate);passIndex(index);modalEditOpen()}}>edit</Button>
                 <span></span>
-                <Button onClick={()=>deleteDate(index)}>delete</Button>
+                <Button variant="contained" size="small" className="delete-btn" onClick={()=>deleteDate(index)}>delete</Button>
               </TableCell>
             </TableRow>
           ))}
@@ -79,7 +92,7 @@ let local =ls ? JSON.parse(ls):[];
     </TableContainer>
     {openEdit&&
       <Edit
-      openEdit={openEdit}
+      open={openEdit}
       setOpenEdit={setOpenEdit}
       edit={edit}
       idx={idx}

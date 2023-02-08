@@ -99,7 +99,10 @@ console.log(input)
           </Button>
         </Box>
       </Modal>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button variant="contained" size="small" onClick={handleOpen}>
+          Add content
+        </Button> 
+      
       <Modal
         open={open}
         onClose={handleClose}
@@ -139,6 +142,7 @@ console.log(input)
                 ))}
               </TextField>
               <br />
+              <hr />
 
               <TextField
                 required
@@ -159,7 +163,7 @@ console.log(input)
                 }}
                 value={input.price}
                 label="price"
-              />
+              /><br></br>
               <Button
                 onClick={() => {
                   handlechildopen();

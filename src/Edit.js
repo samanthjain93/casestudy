@@ -1,24 +1,24 @@
-import  React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { useState } from "react";
-
-import { MenuItem, TextField } from "@mui/material";
-import { useEffect } from "react";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { MenuItem, TextField } from '@mui/material';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
+
 
 const currencies = [
   {
@@ -39,82 +39,67 @@ const currencies = [
   },
 ];
 
-
-
-
-export default function Edit(openEdit,setOpenEdit,edit,idx,selectdata) {
-  const [editModal, setEditModal] = useState(false);
+function Edit({setOpenEdit,open,edit,idx,selectdata}) {
   
 
-  const handleditopen = () => setEditModal(true);
-  const handleditClose = () => setEditModal(false);
+  const [editModal, setEditModal] = useState(false)
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const [editdata, setEditdata] = useState(selectdata);
+  let handleditopen=()=>setEditModal(true);
+  let handleditclose=()=>setEditModal(false);
+  
+  const[editdata,setEditdata]=useState(selectdata);
 
   useEffect(() => {
-  setEditdata({ ...selectdata})
-  }, [selectdata])
+      setEditdata({...selectdata})
   
+          }, [selectdata])
 
-  let EditData = () => {
-    let local=JSON.parse(localStorage.getItem("tableDate"));
-    local[idx]=editdata
-    localStorage.setItem("tableDate", JSON.stringify(local));
-  };
-
-  let closeModal=()=>{
-    setOpenEdit(false);
-    setEditdata({
-        name:"", 
+    let EditDate=()=>{
+      let local=JSON.parse(localStorage.getItem("tableDate"))
+      local[idx]=editdata
+      localStorage.setItem("tableDate",JSON.stringify(local));
+    }
+  
+    let closeModal=()=>{
+      setOpenEdit(false);
+      setEditdata({
+        name:"",
         place:"",
         date:"",
         price:"",
-    })
-  }
+
+      })
+    }
 
 
 
+  // const handleClose=()=>{
+  //   setOpenEdit(false)
+  // }
   return (
     <div>
       <Modal
-        open={editModal}
-        onClose={handleditClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
+      open={editModal}
+        onClose={handleditclose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description" >
         <Box sx={style}>
-          <h1>hello iam child com</h1>
+          <h1> Are you sure to Edit</h1>
+          <Button onClick={()=>{EditDate();closeModal()}}>
+                submit
+              </Button>
+          <Button onClick={handleditclose}>No</Button>
 
-          <Button
-            onClick={() => {
-              EditData();
-              closeModal();
-            }}
-          >
-            sent
-          </Button>
-          <Button
-            onClick={
-              handleditClose()
-            }
-          >
-            Close
-          </Button>
         </Box>
       </Modal>
-      
-      <Modal
-        open={openEdit}
-        onClose={()=>setOpenEdit(false)}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
+              <Modal
+        open={setOpenEdit}
+        onClose={()=>{setOpenEdit(false)}}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Typography id="modal-modal-title" variant="h6" component="h2">
             <Box component="form" autoComplete="off">
               <TextField
                 required
@@ -135,7 +120,7 @@ export default function Edit(openEdit,setOpenEdit,edit,idx,selectdata) {
                 defaultValue="place"
                 helperText="Please select your plan"
                 onChange={(e) => {
-                    setEditdata({ ...editdata, place: e.target.value });
+                  setEditdata({ ...editdata, place: e.target.value });
                 }}
                 value={editdata.place}
               >
@@ -146,12 +131,13 @@ export default function Edit(openEdit,setOpenEdit,edit,idx,selectdata) {
                 ))}
               </TextField>
               <br />
+              <hr />
 
               <TextField
                 required
                 id="outlined-required"
                 onChange={(e) => {
-                    setEditdata({ ...editdata, date: e.target.value });
+                  setEditdata({ ...editdata, date: e.target.value });
                 }}
                 value={editdata.date}
                 type="date"
@@ -162,24 +148,21 @@ export default function Edit(openEdit,setOpenEdit,edit,idx,selectdata) {
                 required
                 id="outlined-required"
                 onChange={(e) => {
-                    setEditdata({ ...editdata, price: e.target.value });
+                  setEditdata({ ...editdata, price: e.target.value });
                 }}
                 value={editdata.price}
                 label="price"
-              />
-              <Button
-                onClick={
-                  closeModal()
-                  
-                }
-              >
-                close
-              </Button>
-              <Button onClick={handleditopen}>edit</Button>
+              /><br></br>
+              <Button onClick={handleditopen}>Edit</Button>
+              
+              <Button onClick={closeModal}>Close</Button>
             </Box>
           </Typography>
         </Box>
       </Modal>
+
     </div>
-  );
+  )
 }
+
+export default Edit

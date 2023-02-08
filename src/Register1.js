@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import "./Login.css";
+
+import "../src/Login.css";
 import { useNavigate } from "react-router-dom";
+import { Box, Button, TextField } from "@mui/material";
 
 function Register1() {
   let history = useNavigate();
@@ -12,8 +13,12 @@ function Register1() {
   const [password, setPassword] = useState("");
   const [role, setrole] = useState("");
 
+
+
   let submit = async () => {
+    
     let register = { fname, lname, email, password, role };
+    try{
     let res = await axios.post(
       "https://products-jwt.onrender.com/users/register",
       register
@@ -21,48 +26,67 @@ function Register1() {
     let data = JSON.stringify(res);
     localStorage.setItem("user-info", data);
     history("/home");
-  };
+  }
 
+  catch (error){
+     alert(error.message);
+  };
+  }
   return (
     <div class="btn">
-      <label>username</label>
-      <input
-        type="text"
-        value={fname}
-        onChange={(e) => setfname(e.target.value)}
-      ></input>
+      <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField
+          required
+          id="outlined-required"
+          label="Firstname"
+          onChange={(e) => setfname(e.target.value)}
+          value={fname}
+        /> <br></br>
+        <TextField
+          required
+          id="outlined-required"
+          label="Lastname"
+          onChange={(e) => setlname(e.target.value)}
+          value={lname}
+        /> <br></br>
+        <TextField
+          required
+          id="outlined-required"
+          label="Email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        /> <br></br>
+        <TextField
+          required
+          id="outlined-required"
+          label="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          type="password"
+        /> <br></br>
+        <TextField
+          required
+          id="outlined-required"
+          label="Role"
+          onChange={(e) => setrole(e.target.value)}
+          value={role}
+        /> <br></br>
+      </Box>
+      
+      
+      
+     
       <br></br>
-      <label>lastname</label>
-      <input
-        type="text"
-        value={lname}
-        onChange={(e) => setlname(e.target.value)}
-      ></input>
-      <br></br>
-      <label>email</label>
-      <input
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      ></input>
-      <br></br>
-      <label>password</label>
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      ></input>
-      <br></br>
-      <label>role</label>
-      <input
-        type="password"
-        value={role}
-        onChange={(e) => setrole(e.target.value)}
-      ></input>
-      <br></br>
-      <Button class="btn btn-primary" onClick={submit}>
-        submit
-      </Button>
+
+      <Button variant="contained" onClick={submit}>submit</Button>
+      
     </div>
   );
 }
